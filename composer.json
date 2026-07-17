@@ -20,6 +20,7 @@
         "illuminate/contracts": "^11.0||^12.0||^13.0"
     },
     "require-dev": {
+        "larastan/larastan": "^3.10",
         "laravel/legacy-factories": "^1.4",
         "laravel/pint": "^1.14",
         "nunomaduro/collision": "^8.8",
@@ -44,7 +45,8 @@
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse"
     },
     "config": {
         "sort-packages": true,
