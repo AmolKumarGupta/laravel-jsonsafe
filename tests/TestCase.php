@@ -23,6 +23,7 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        config()->set('auth.providers.users.model', \Amol\LaravelJsonSafe\Tests\Models\User::class);
     }
 
     protected function defineDatabaseMigrations() 

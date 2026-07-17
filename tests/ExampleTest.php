@@ -1,10 +1,14 @@
 <?php
 
-use Illuminate\Foundation\Auth\User;
+use Amol\LaravelJsonSafe\JsonSafeable;
 use Orchestra\Testbench\Factories\UserFactory;
 
 it('can test', function () {
-    // app(UserFactory::class)->create();
-    // dump(User::first());
-    expect(true)->toBeTrue();
+    $user = app(UserFactory::class)->create([
+        'extras' => ['key' => 'value'],
+    ]);
+
+    expect($user->extras)
+        ->toBeInstanceOf(JsonSafeable::class)
+        ->toHaveProperty('key');
 });
