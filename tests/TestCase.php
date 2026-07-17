@@ -3,7 +3,9 @@
 namespace Amol\LaravelJsonSafe\Tests;
 
 use Amol\LaravelJsonSafe\LaravelJsonSafeServiceProvider;
+use Amol\LaravelJsonSafe\Tests\Models\User;
 use Orchestra\Testbench\TestCase as Orchestra;
+
 use function Orchestra\Testbench\default_migration_path;
 
 class TestCase extends Orchestra
@@ -23,19 +25,19 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-        config()->set('auth.providers.users.model', \Amol\LaravelJsonSafe\Tests\Models\User::class);
+        config()->set('auth.providers.users.model', User::class);
     }
 
-    protected function defineDatabaseMigrations() 
+    protected function defineDatabaseMigrations()
     {
         $this->loadMigrationsFrom(
             default_migration_path()
         );
 
         $this->loadMigrationsFrom(
-            __DIR__ . '/database/migrations'
+            __DIR__.'/database/migrations'
         );
 
-        $this->loadFactoriesUsing(app(), __DIR__ . '/database/factories');
+        $this->loadFactoriesUsing(app(), __DIR__.'/database/factories');
     }
 }

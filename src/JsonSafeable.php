@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Casts\ArrayObject;
  */
 class JsonSafeable extends ArrayObject
 {
-
     /**
-     * @param array<int|string, mixed> $data
+     * @param  array<int|string, mixed>  $data
      */
-    public function __construct(array $data) 
+    public function __construct(array $data)
     {
         parent::__construct($data, \ArrayObject::ARRAY_AS_PROPS);
     }
@@ -27,5 +26,4 @@ class JsonSafeable extends ArrayObject
     {
         return $this->getArrayCopy();
     }
-
 }
