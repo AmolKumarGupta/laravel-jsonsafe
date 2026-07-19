@@ -2,7 +2,7 @@
 
 ## What this is
 
-Laravel Eloquent cast package (`amol/laravel-jsonsafe`) that wraps JSON column values in a safe `ArrayObject` subclass (`JsonSafeable`) supporting property-style access. PHP 8.3+, Laravel 11–13.
+Laravel Eloquent cast package (`amol/laravel-jsonsafe`) that wraps JSON column values in a safe `ArrayObject` subclass (`JsonSafeable`). PHP 8.3+, Laravel 11–13.
 
 ## Commands
 
@@ -19,7 +19,7 @@ GitHub Actions matrix in `.github/workflows/run-tests.yml`: PHP 8.3–8.5 × Lar
 ## Architecture
 
 - `src/JsonSafe.php` — Eloquent cast implementing `CastsAttributes` (get/set/serialize)
-- `src/JsonSafeable.php` — `ArrayObject` subclass with `ARRAY_AS_PROPS` for property access
+- `src/JsonSafeable.php` — `ArrayObject` subclass
 - `src/LaravelJsonSafeServiceProvider.php` — Spatie-based, publishes only `config/jsonsafe.php`
 - Namespace: `Amol\LaravelJsonSafe\`
 

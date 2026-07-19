@@ -9,6 +9,5 @@ it('can test', function () {
     ]);
 
     expect($user->extras)
-        ->toBeInstanceOf(JsonSafeable::class)
-        ->toHaveProperty('key');
+        ->toBeInstanceOf(JsonSafeable::class);
 });

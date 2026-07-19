@@ -25,8 +25,11 @@ class JsonSafe implements CastsAttributes
             return null;
         }
 
-        /** @var array<int|string, mixed> $data */
         $data = \json_decode($value, true, flags: \JSON_THROW_ON_ERROR | \JSON_BIGINT_AS_STRING);
+
+        if (! is_array($data)) {
+            return null;
+        }
 
         return new JsonSafeable($data);
     }
@@ -38,6 +41,10 @@ class JsonSafe implements CastsAttributes
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
+        if ($value === null) {
+            return null;
+        }
+
         if (is_array($value)) {
             $value = new JsonSafeable($value);
         }
@@ -49,8 +56,8 @@ class JsonSafe implements CastsAttributes
      * @param  array<string, mixed>  $attributes
      * @return array<int|string, mixed>
      */
-    public function serialize(Model $model, string $key, JsonSafeable $value, array $attributes): array
+    public function serialize(Model $model, string $key, ?JsonSafeable $value, array $attributes): array
     {
-        return $value->getArrayCopy();
+        return $value?->getArrayCopy() ?? [];
     }
 }

@@ -14,7 +14,7 @@ class JsonSafeable extends ArrayObject
      */
     public function __construct(array $data)
     {
-        parent::__construct($data, \ArrayObject::ARRAY_AS_PROPS);
+        parent::__construct($data);
     }
 
     /**
