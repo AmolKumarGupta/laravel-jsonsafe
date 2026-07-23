@@ -50,9 +50,9 @@ class JsonSafe implements CastsAttributes
             $value = new JsonSafeable($value);
         }
 
-        // if ($value instanceof JsonSafeable) {
-        //     Validator::validate($value, $model, $key);
-        // }
+        if ($value instanceof JsonSafeable) {
+            Validator::validate($value, $model, $key);
+        }
 
         return \json_encode($value, \JSON_THROW_ON_ERROR);
     }

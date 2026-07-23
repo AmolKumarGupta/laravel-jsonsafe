@@ -11,5 +11,29 @@ class User extends Authenticatable
 
     protected $casts = [
         'extras' => JsonSafe::class,
+        'preferences' => JsonSafe::class,
     ];
+
+    public function schemaOfPreferences(): array
+    {
+        return [
+            'type' => 'object',
+            'properties' => [
+                'appearance' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'theme' => [
+                            'type' => 'string',
+                            'enum' => ['light', 'dark', 'system'],
+                        ],
+                        'fontSize' => [
+                            'type' => 'integer',
+                            'minimum' => 10,
+                            'maximum' => 24,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
 }

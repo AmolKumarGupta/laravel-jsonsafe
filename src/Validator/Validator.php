@@ -18,7 +18,7 @@ class Validator
             return;
         }
 
-        $rawSchema = $model->{$methodName};
+        $rawSchema = $model->{$methodName}();
         /** @var object $schema */
         $schema = Helper::toJSON($rawSchema);
 
@@ -29,9 +29,10 @@ class Validator
 
         if ($validationResult->hasError() && $errors = $validationResult->error()) {
             $formatter = new ErrorFormatter;
-            $errors = $formatter->formatFlat($errors);
+            $list = $formatter->formatKeyed($errors);
 
-            throw new Exception(message: \implode("\n", $errors));
+            $message = json_encode($list);
+            throw new Exception(message: $message ?: 'Invalid Json');
         }
     }
 }
