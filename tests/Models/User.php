@@ -3,8 +3,12 @@
 namespace Amol\LaravelJsonSafe\Tests\Models;
 
 use Amol\LaravelJsonSafe\JsonSafe;
+use Amol\LaravelJsonSafe\JsonSafeable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property JsonSafeable $preferences
+ */
 class User extends Authenticatable
 {
     protected $guarded = [];

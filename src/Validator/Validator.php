@@ -3,6 +3,7 @@
 namespace Amol\LaravelJsonSafe\Validator;
 
 use Amol\LaravelJsonSafe\JsonSafeable;
+use Amol\LaravelJsonSafe\Serializer\JsonRepresentorSerializer;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Opis\JsonSchema\Errors\ErrorFormatter;
@@ -23,7 +24,7 @@ class Validator
         $schema = Helper::toJSON($rawSchema);
 
         $rawData = $jsonsafeable->toArray();
-        $data = Helper::toJSON($rawData);
+        $data = JsonRepresentorSerializer::serialize($rawData, $rawSchema);
         $validator = new JsonSchemaValidator(max_errors: 50);
         $validationResult = $validator->validate($data, $schema);
 
