@@ -2,6 +2,7 @@
 
 namespace Amol\LaravelJsonSafe;
 
+use Amol\LaravelJsonSafe\Validator\Validator;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -47,6 +48,10 @@ class JsonSafe implements CastsAttributes
 
         if (is_array($value)) {
             $value = new JsonSafeable($value);
+        }
+
+        if ($value instanceof JsonSafeable) {
+            Validator::validate($value, $model, $key);
         }
 
         return \json_encode($value, \JSON_THROW_ON_ERROR);
