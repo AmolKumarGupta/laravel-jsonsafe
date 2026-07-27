@@ -12,7 +12,20 @@ class ModelMethodResolver
 
     public static function resolve(string $key): string
     {
-        return self::$prefix.Str::studly($key, normalize: true);
+        /**
+         * Add support for UPPERCASE value to Uppercase for laravel verson below 13
+         */
+        $normalizedKey = \preg_replace_callback(
+            '/(^|[-_ \s])([A-Z]+)(?=[-_ \s]|$)/u',
+            fn ($m) => $m[1].Str::lower($m[2]),
+            $key
+        );
+
+        if (! \is_string($normalizedKey)) {
+            return self::$prefix.Str::studly($key);
+        }
+
+        return self::$prefix.Str::studly($normalizedKey);
     }
 
     public static function doesResolveMethodExists(Model|string $model, string $methodName): bool
