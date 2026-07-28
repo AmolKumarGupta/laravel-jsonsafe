@@ -32,7 +32,7 @@ class Validator
             $formatter = new ErrorFormatter;
             $list = $formatter->formatKeyed($errors);
 
-            $message = json_encode($list);
+            $message = \json_encode($list);
             throw new Exception(message: $message ?: 'Invalid Json');
         }
     }

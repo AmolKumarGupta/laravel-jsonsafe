@@ -30,7 +30,7 @@ class ModelMethodResolver
 
     public static function doesResolveMethodExists(Model|string $model, string $methodName): bool
     {
-        if (method_exists($model, $methodName)) {
+        if (\method_exists($model, $methodName)) {
             $reflection = new ReflectionMethod($model, $methodName);
 
             return $reflection->isPublic();

@@ -1,25 +1,16 @@
-# laravel-jsonsafe
+## Laravel JsonSafe
 
-<div align="center"><img alt="Laravel JsonSafe" src="art/banner.svg"></div><br/>
+This package provides mutable JSON column casting for Laravel Eloquent with JSON Schema validation via `opis/json-schema`.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/amol/laravel-jsonsafe.svg?style=flat-square)](https://packagist.org/packages/amol/laravel-jsonsafe)
-[![run-tests](https://github.com/AmolKumarGupta/laravel-jsonsafe/actions/workflows/run-tests-push.yml/badge.svg)](https://github.com/AmolKumarGupta/laravel-jsonsafe/actions/workflows/run-tests-push.yml)
+### Features
 
-Mutable JSON column casting for Laravel Eloquent. Supports JSON Schema validation via `opis/json-schema`.
+- **Mutable JSON casting**: Wrap JSON columns in `JsonSafeable` (an `ArrayObject` subclass) so nested key reads and writes persist on `save()` without manual reassignment.
+- **JSON Schema validation**: Define validation schemas via `schemaOf{Key}()` methods on models. Data is validated on every `set()` call using `opis/json-schema`.
+- **Serialization**: `toArray()` and `toJson()` return the underlying plain array.
 
-## Installation
+### Casting a column
 
-You can install the package via composer:
-
-```bash
-composer require amol/laravel-jsonsafe
-```
-
-## Usage
-
-### Basic casting
-
-Cast a JSON column to `JsonSafe` in your model:
+Use `Amol\LaravelJsonSafe\JsonSafe` in your model's `$casts` array:
 
 ```php
 use Amol\LaravelJsonSafe\JsonSafe;
@@ -28,6 +19,7 @@ class User extends Model
 {
     protected $casts = [
         'extras' => JsonSafe::class,
+        'preferences' => JsonSafe::class,
     ];
 }
 ```
@@ -37,11 +29,9 @@ Read and write nested keys directly — changes persist on `save()`:
 ```php
 $user->extras['theme'] = 'dark';
 $user->save();
-
-$user->extras['theme']; // 'dark'
 ```
 
-### JSON Schema validation
+### Validation schemas
 
 Define a public `schemaOf{Key}()` method on your model to enable validation. The column key is converted to StudlyCase and prefixed with `schemaOf` (e.g., `preferences` → `schemaOfPreferences()`).
 
@@ -93,34 +83,9 @@ Key mapping rules:
 
 Columns without a schema method are not validated.
 
-Schemas follow the [JSON Schema](https://opis.io/json-schema/2.x/structure.html) standard via `opis/json-schema`. You can use any supported keywords (`type`, `properties`, `enum`, `required`, `minimum`, `maximum`, `pattern`, etc.).
+### Conventions
 
-### Serialization
-
-`toArray()` and `toJson()` return the underlying plain array:
-
-```php
-$user->extras->toArray(); // ['theme' => 'dark']
-```
-
-## Testing
-
-```bash
-composer test
-```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+- Schemas follow the [JSON Schema](https://opis.io/json-schema/2.x/structure.html) standard via `opis/json-schema`.
+- `JSON_THROW_ON_ERROR` is always used — invalid JSON throws before any DB write.
+- `JSON_BIGINT_AS_STRING` is set on decode to preserve large integers as strings.
+- No attribute-level dirty tracking — mutations through `JsonSafeable` require an explicit `save()`.
