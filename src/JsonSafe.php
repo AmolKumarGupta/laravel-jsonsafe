@@ -22,13 +22,13 @@ class JsonSafe implements CastsAttributes
         if ($value === null) {
             return null;
         }
-        if (! is_string($value)) {
+        if (! \is_string($value)) {
             return null;
         }
 
         $data = \json_decode($value, true, flags: \JSON_THROW_ON_ERROR | \JSON_BIGINT_AS_STRING);
 
-        if (! is_array($data)) {
+        if (! \is_array($data)) {
             return null;
         }
 
@@ -46,7 +46,7 @@ class JsonSafe implements CastsAttributes
             return null;
         }
 
-        if (is_array($value)) {
+        if (\is_array($value)) {
             $value = new JsonSafeable($value);
         }
 

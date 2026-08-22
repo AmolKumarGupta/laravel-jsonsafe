@@ -6,6 +6,7 @@
 |---|---|---|
 | PHP | ^8.3 | Minimum version |
 | illuminate/contracts | ^11.0 \|\| ^12.0 \|\| ^13.0 | Laravel Eloquent `CastsAttributes` interface |
+| opis/json-schema | ^2.6 | JSON Schema validation for cast data |
 | spatie/laravel-package-tools | ^1.16 | Service provider scaffolding, config publishing |
 
 ## Dev
@@ -31,4 +32,4 @@
 
 ## CI
 
-GitHub Actions matrix: PHP 8.3–8.5 × Laravel 12–13. Runs `vendor/bin/pest --ci`. Triggers on push to `main` and PRs to `dev`.
+GitHub Actions matrix: PHP 8.3–8.5 × Laravel 12–13. Runs `vendor/bin/pest --ci`. Triggers on push to `main` and PRs to `main`.
