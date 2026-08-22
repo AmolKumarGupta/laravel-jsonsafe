@@ -244,6 +244,76 @@ it('serializes nested extras via toArray', function () {
 
 /*
 |--------------------------------------------------------------------------
+| BigInt Handling
+|--------------------------------------------------------------------------
+*/
+
+it('decodes bigint values as strings from database', function () {
+    $bigIntValue = '9223372036854775807';
+    $user = app(UserFactory::class)->create([
+        'extras' => ['big_id' => $bigIntValue, 'normal' => 42],
+    ]);
+
+    $fresh = $user->fresh();
+
+    expect($fresh->extras['big_id'])->toBe($bigIntValue)
+        ->and($fresh->extras['big_id'])->toBeString()
+        ->and($fresh->extras['normal'])->toBe(42);
+});
+
+it('handles bigint at nested level', function () {
+    $bigIntValue = '9223372036854775807';
+    $user = app(UserFactory::class)->create([
+        'extras' => ['metadata' => ['transaction_id' => $bigIntValue]],
+    ]);
+
+    $fresh = $user->fresh();
+
+    expect($fresh->extras['metadata']['transaction_id'])->toBe($bigIntValue)
+        ->and($fresh->extras['metadata']['transaction_id'])->toBeString();
+});
+
+it('serializes bigint strings correctly to JSON', function () {
+    $bigIntValue = '9223372036854775807';
+    $user = app(UserFactory::class)->create([
+        'extras' => ['big_id' => $bigIntValue],
+    ]);
+
+    $json = $user->toJson();
+    $decoded = json_decode($json, true);
+
+    expect($decoded['extras']['big_id'])->toBe($bigIntValue);
+});
+
+it('requires bigint input as string to avoid float precision loss', function () {
+    $bigIntValue = '9223372036854775808';
+    $user = User::create([
+        'name' => 'Test User',
+        'email' => uniqid().'@test.com',
+        'password' => 'secret',
+        'extras' => ['big_id' => $bigIntValue],
+    ]);
+
+    $fresh = $user->fresh();
+
+    expect($fresh->extras['big_id'])->toBe($bigIntValue)
+        ->and($fresh->extras['big_id'])->toBeString();
+});
+
+it('handles very large bigint beyond PHP_INT_MAX', function () {
+    $largeInt = '18446744073709551615';
+    $user = app(UserFactory::class)->create([
+        'extras' => ['uuid_as_int' => $largeInt],
+    ]);
+
+    $fresh = $user->fresh();
+
+    expect($fresh->extras['uuid_as_int'])->toBe($largeInt)
+        ->and($fresh->extras['uuid_as_int'])->toBeString();
+});
+
+/*
+|--------------------------------------------------------------------------
 | Bulk Creation — Eloquent
 |--------------------------------------------------------------------------
 */

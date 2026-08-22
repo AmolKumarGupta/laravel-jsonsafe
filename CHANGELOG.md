@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.1]  - 2026-08-22
 
 ### Changed
-- 
+- Added documentation
+- Added testcase for bigint
 
 
 ## [0.1.0-beta.1] - 2026-07-27
