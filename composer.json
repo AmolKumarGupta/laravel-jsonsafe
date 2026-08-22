@@ -1,11 +1,13 @@
 {
     "name": "amol/laravel-jsonsafe",
-    "description": "This is my package laravel-jsonsafe",
+    "description": "Mutable JSON column casting for Laravel Eloquent",
     "keywords": [
         "laravel",
-        "laravel-jsonsafe"
+        "laravel-jsonsafe",
+        "json-schema-validator",
+        "json-schema"
     ],
-    "homepage": "https://github.com/amol/laravel-jsonsafe",
+    "homepage": "https://github.com/AmolKumarGupta/laravel-jsonsafe",
     "license": "MIT",
     "authors": [
         {
